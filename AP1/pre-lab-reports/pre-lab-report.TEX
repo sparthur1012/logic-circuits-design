@@ -1,0 +1,165 @@
+%preamble: defining document parameters and packages
+
+\documentclass[11pt]{report}         %defining documentclass
+\usepackage[brazil] {babel}          %defining document language
+\usepackage[utf8]{inputenc}          %defining to support portuguese a accentuation 
+\usepackage{authblk}                 %defining packages to better author format
+\usepackage{indentfirst}             %defining packages to indention first paragraph's line
+\usepackage[margin=2.5cm]{geometry}  %defining margin
+\usepackage[table]{xcolor}           %defining table colors
+\usepackage{pdfpages}                %enabling pdf attachment 
+
+%cover (title, author and date)
+
+\title{\textbf{Preparatório para T1}}
+\author{Arthur Siqueira Paz Teixeira \\ \& \\ Yure da Silva Lacerda de Barros} 
+\affil{Disciplina: Circuitos Lógicos -- Professor: Fabio Marujo}
+\date{\today}
+
+
+\begin{document}                  %start document
+
+\maketitle                        %generate the cover
+\tableofcontents                  %generate the summary
+
+\chapter {Introdução}             %First chapter
+
+Na disciplina de Circuitos Logicos parte do nosso estudo está direcionado ao estudo de \textbf{circuitos integrados (C.I.s)} e suas aplicações. Para tanto, o 
+\textbf{desenvolvimento prático} de alguns circuitos se vê como importante para que o conhecimento seja aplicado e tenha-se experiência real no manuseio desses componetes 
+considerados de supra importancia para o desenvolvimento tecnológico.
+
+Como base para tal usaremos a \textbf{família TTL padrão (74xx)} devido a sua ampla aplicação e disponibilidade no mercado. Neste documento além de realizaremos 
+o preparatório para a aplicação do circuito proposto para a primeira pratica (A.P.), desenvolveremos um breve estudo sobre está familia de C.I.s e suas propriedades.
+
+\chapter {Propriedades da família TTL padrão}
+
+Neste capitulo foram levantados os parâmetros de operação da família TTL (série 74xx), que são fundamentais para a implementação em bancada de forma correta e sem danos 
+aos componentes. A fonte para esses dados é o \textbf{\textit{Datasheet}(folha de dados)} dispobilizado pela fabricadora \textbf{\textit{Texas Instruments}}, 
+\textbf{\textit{Digital Logic: Pocket Data Book}}
+
+\section{Valores de Tensão}
+
+  Esses valores podem ser verificados nas tabelas de \textbf{textit{``Recommended Operating Conditions''}} e \textbf{\textit{``Electrical Characteristics''}} do 
+  \textbf{\textit{Datasheet}}
+
+  \begin{itemize}
+
+    \item \textbf{Tensão de Alimentação ($V_{CC}$:} O valor típico de operação é 5,0V, com tolerância entre 4,75V (mín) e 5,25V (máx).
+
+    \item \textbf{Níveis Lógicos de Entrada:} Para que uma entrada seja reconhecida como nível baixo (L), a tensão $V_{IL}$ deve estar entre 0V e 0,8V. 
+    Para nível alto (H), a tensão $V_{IH}$ deve ser de no mínimo 2,0V. 
+
+    \item \textbf{Níveis Lógicos de Saída:} Uma saída em nível baixo ($V_{OL}$) garante no máximo 0,4V. Em nível alto ($V_{OH}$), a saída garante no mínimo $2,4V$. 
+    
+    \end{itemize}
+
+\section{Valores de Corrente}
+
+   Esses valores podem ser verificados na tabela de \textbf{\textit{``Electrical Characteristics''}} do \textbf{\textit{Datasheet}}
+
+  \begin{itemize}
+    
+    \item \textbf{Capacidade de Corrente:} A corrente de saída em nível baixo ($I{OL}$) é de 16mA, enquanto em nível alto ($I_{OL}$) é de $-400\mu A$.
+    
+    \item \textbf{Capacidade de Corrente:} A corrente de saída em nível baixo ($I_{OL}$) é de 16mA, enquanto em nível alto ($I_{OH}$) é de $-400\mu A$.
+
+  \end{itemize}
+
+\section{\textbf{\textit{Fan-out}}, Margem de Ruído e Propriedades Temporais}
+
+  Esses parâmetros são importantes para definir limites e margens de atuação para preservar os dados e informações gerados e inseridos no sistema:
+
+  \begin{itemize}
+    
+    \item \textbf{\textit{Fan-out}}: Define a quantidade máxima de entradas de uma mesma família que uma saída pode acionar sem comprometer os níveis lógicos.
+    Para a família TTL padrão, o \textbf{\textit{Fan-out}} típico é \textbf{10}. Isso se justifica pela relação entre a corrente de saída ($I_{OL}$) 
+    e a corrente de entrada ($I_{IL}$),  onde a porta transmissora deve ser capaz de drenar a corrente vinda das 10 portas receptoras em nível baixo.\\
+
+    \textbf{Cálculo}: $\textit{Fan-out} = \frac{I_{OL}}{I_{IL}} = \frac{16mA}{1,6mA} = 10$\\
+      
+    logo: Uma porta TTL padrão consegue garantir o nível lógico "0" para até 10 entradas simultâneas da mesma família.    
+
+    \item \textbf{Margem de Ruído ($V_{NM}$):} Esse parametro define a imunidade do circuito a tensões de interferecia. 
+    
+    \begin{itemize}
+    
+      \item Nível Baixo: $V_{NML} = V_{IL(max)} - V_{OL(max)} = 0,8V - 0,4V = 0,4V$.
+      
+      \item Nível Alto: $V_{NMH} = V_{OH(min)} - V_{IH(min)} = 2,4V - 2,0V = 0,4V$.
+    
+    \end{itemize}
+
+    Ela atua como uma margem de segurança de \textbf{0,4V} para evitar que esses ruídos invertam o estado lógico.
+
+    \item \textbf{Atraso de Propagação ($t_p$):} O tempo que o sinal leva para atravessar a porta lógica. Na série \textbf{74xx}, 
+    o $t_{pd}$ típico é de \textbf{10ns a 22ns}. 
+    Esse atraso é gerado pelo tempo de chaveamento dos transistores internos.
+
+    \item \textbf{Consumo de Potência:} A família TTL padrão possui um consumo relativamente alto comparado à CMOS, tipicamente \textbf{10mW por porta}, 
+    devido à polarização constante dos transistores bipolares.
+  
+  \end{itemize}
+
+\chapter{Metodologia e Cálculos}
+
+\section{Cálculo do Resistor de Limitação (LED)}
+
+  Para fins de demonstração pratica e melhor indentificação e sinalização dos estados lógicos das entradas (A, B, C) e da saída (Y) no protoboard, 
+  utilizaremos LEDs em série com resistores.
+
+  Considerando um LED comum (vermelho) com queda de tensão direta $V_d \approx 1,8V$ e corrente desejada $I_{LED} \approx 10mA$:
+
+  $$R = \frac{V_{CC} - V_d}{I_{LED}} = \frac{5,0V - 1,8V}{0,010A} = 320\Omega$$
+
+  \textbf{Valor comercial adotado:} Utilizaremos resistores de \textbf{$330\Omega$}, garantindo uma corrente segura de aproximadamente $9,7mA$, 
+  o que está dentro do limite de fornecimento da saída TTL e protege o componente.
+
+\chapter{Projeto e Simulação}
+
+\section{Circuitos Combinacionais}
+
+  Nesta etapa (item \textit{b} e \textit{c} do roteiro), os circuitos descritos no anexo foram implementados no simulador para levantamento da tabela verdade.
+
+\subsection{Circuito 2 (Anexo)}
+
+  O circuito combinacional proposto apresenta a função lógica baseada numa estrutura de entradas nomeadas de A, B e C. 
+  
+  A expressão lógica obtida para a saída $Y$ é: $Y = (A + B) \cdot (\bar{B} + C)$
+
+  \begin{table}[h!]
+    \centering
+    
+    \caption{Tabela Verdade Teórica/Simulada}
+    
+    \begin{tabular}{|c|c|c|>{\columncolor{black}\color{white}}c|}
+
+      \hline
+      \textbf{A} & \textbf{B} & \textbf{C} & \textbf{Y} \\ \hline
+      0 & 0 & 0 & 0 \\ \hline
+      0 & 0 & 1 & 0 \\ \hline
+      0 & 1 & 0 & 1 \\ \hline
+      0 & 1 & 1 & 1 \\ \hline
+      1 & 0 & 0 & 0 \\ \hline
+      1 & 0 & 1 & 1 \\ \hline
+      1 & 1 & 0 & 1 \\ \hline
+      1 & 1 & 1 & 1 \\ \hline
+    
+    \end{tabular}
+
+\end{table}
+
+\chapter{Roteiro de Montagem (Bancada)}
+
+  Para a aula do dia 07/04/2026, a montagem no protoboard seguirá o diagrama de pinagem (pinout) dos C.I.s:
+
+  \begin{itemize}
+    \item \textbf{7404:} Hex Inverter (Portas NOT);
+    \item \textbf{7408:} Quad 2-Input AND;
+    \item \textbf{7432:} Quad 2-Input OR.
+  \end{itemize}
+
+  Durante a prática, serão medidas as tensões $V_{in}$ e $V_{out}$ para cada combinação binária para validar os parâmetros de $V_{OH}$ e $V_{OL}$ estudados no capítulo 2.
+
+\includepdf[pages=-]{ckts_e_tabelas.pdf}
+
+\end{document}

@@ -1,0 +1,12 @@
+\babel@toc {brazil}{}\relax 
+\contentsline {chapter}{\numberline {1}Introdução}{2}{}%
+\contentsline {chapter}{\numberline {2}Propriedades da família TTL padrão}{3}{}%
+\contentsline {section}{\numberline {2.1}Valores de Tensão}{3}{}%
+\contentsline {section}{\numberline {2.2}Valores de Corrente}{3}{}%
+\contentsline {section}{\numberline {2.3}\textbf {\textit {Fan-out}}, Margem de Ruído e Propriedades Temporais}{3}{}%
+\contentsline {chapter}{\numberline {3}Metodologia e Cálculos}{5}{}%
+\contentsline {section}{\numberline {3.1}Cálculo do Resistor de Limitação (LED)}{5}{}%
+\contentsline {chapter}{\numberline {4}Projeto e Simulação}{6}{}%
+\contentsline {section}{\numberline {4.1}Circuitos Combinacionais}{6}{}%
+\contentsline {subsection}{\numberline {4.1.1}Circuito 2 (Anexo)}{6}{}%
+\contentsline {chapter}{\numberline {5}Roteiro de Montagem (Bancada)}{7}{}%
