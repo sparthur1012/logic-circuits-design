@@ -10,3 +10,4 @@
 \contentsline {section}{\numberline {4.1}Circuitos Combinacionais}{6}{}%
 \contentsline {subsection}{\numberline {4.1.1}Circuito 2 (Anexo)}{6}{}%
 \contentsline {chapter}{\numberline {5}Roteiro de Montagem (Bancada)}{7}{}%
+\contentsline {chapter}{\numberline {6}\ignorespaces {Anexo: Circuitos Propostos}}{8}{}%
