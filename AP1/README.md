@@ -6,7 +6,7 @@ In order to pratice some class learned teorical knology and test our pratical an
 >
 > Complete the practical exercise, **WHITCH MUST BE SUBMITTED BY APRIL 7, 2026**, observing the following evaluation criteria:
 >
-> ####**What will be evaluated IN EACH practical session:**
+> **What will be evaluated IN EACH practical session:**
 >
 > - A. Preparatory - 2.5 POINTS;
 > - B. Simulation  - 2.5 POINTS;
