@@ -1,4 +1,4 @@
-> #> [!TIP]
+# > [!TIP]
 >
 > That repository primary objective is for our own trainning and pratice of project maintaining and organizing a simple project. The priority will be the timely delivery of exercises, so the repository may be incomplete and/or poorly documented due to deadlines and the inexperience of its maintainers.
 >
