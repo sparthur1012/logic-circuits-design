@@ -38,4 +38,40 @@ In order to pratice some class learned teorical knology and test our pratical an
 >
 > FOR THE STUDENT TO EARN POINTS, THE PROJECT (PREPARATORY) MUST HAVE THE FOLLOWING FORM:
 >
+> **PROJECT**/Preparation **IN GENERAL**:
 >
+> - Bring the completed exercises and all stages of the project, whether it's a simplified draft or a complete version of everything you've done.
+> - Bring it in an **ORGANIZED MANNER** (preparation with objectives and answers organized and numbered as in practice) to explain to me how it was done.
+>
+> **FOR THE SIMULATIONS**:
+>
+> - BRING PRINTED COPIES OF THE REQUESTED SIMULATIONS;
+>
+> - Be organized and think about how to present this clearly and concisely.
+>
+> - If the student is unable to explain or answer something about the simulation, THEY WILL NOT RECEIVE A GRADE FOR THIS AREA.
+>
+> **FOR THE WORKBENCH TASK**:
+>
+> - DID NOT BRING ASSEMBLED CIRCUIT: NO GRADE FOR THIS CATEGORY;
+>
+> - BROUGHT ASSEMBLED CIRCUIT AND IT DID NOT WORK: NO GRADE FOR THIS CATEGORY;
+>
+> - BROUGHT ASSEMBLED CIRCUIT AND IT WORKED: RECEIVES A GRADE FOR THIS CATEGORY;
+>
+> **The student is only entitled to submit a report if they score points in the 3 previous criteria;**
+>
+> **Who is eligible to submit the report:**
+>
+> - Please submit the "upload" of the completed practice in PDF format by April 30th (Thu).
+>
+> **NOTE:**
+>
+> - ANYONE ABSENT ON THE DAY OF THE PRACTICAL SESSION WILL NOT RECEIVE A REPORT GRADE OR ANY GRADE AT ALL.
+> - ON THE DAY OF THE PRACTICAL SESSION, THERE IS NOT ENOUGH TIME FOR ASSEMBLY;
+> - ALL COMPONENTS ARE THE STUDENT'S RESPONSIBILITY;
+> - NEITHER THE UNIVERSITY NOR THE DEPARTMENT PROVIDES COMPONENTS FOR LOGIC CIRCUIT PRACTICAL EXERCISES;
+> - PURCHASE THE COMPONENTS AS SOON AS YOU MAKE THEM, AS DELIVERIES TAKE ON AVERAGE 1 WEEK OR MORE;
+> - SEE THE STORES I POSTED AS SUGGESTIONS FOR PURCHASING ELECTRONIC COMPONENTS;
+
+The document with the exercices is attached in the actual directory named as "AP2-exercice-guide.pdf"
