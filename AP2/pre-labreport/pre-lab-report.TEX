@@ -2,12 +2,12 @@
 
 \documentclass[11pt]{report}         %defining documentclass
 \usepackage[brazil] {babel}          %defining document language
-\usepackage[utf8]{inputenc}          %defining to support portuguese a accentuation 
+\usepackage[utf8]{inputenc}          %defining to support portuguese a accentuation
 \usepackage{authblk}                 %defining packages to better author format
 \usepackage{indentfirst}             %defining packages to indention first paragraph's line
 \usepackage[margin=2.5cm]{geometry}  %defining margin
 \usepackage[table]{xcolor}           %defining table colors
-\usepackage{pdfpages}                %enabling pdf attachment 
+\usepackage{pdfpages}                %enabling pdf attachment
 
 %cover (title, author and date)
 
@@ -24,4 +24,30 @@
 
 \chapter {Introdução}             %First chapter
 
+Como forma de otimizar os custos de produção, tempo de desenvolvimento e espaço ocupado pelo \textit{hardware} é de praxe que qualquer circuito
+passe por um trabalho de simplificação usando técnicas tradicionais de simplificação. As principais fomas de simplificações incluem as tecnias da 
+textbf{algebra booleana} e textbf{mapa de karnaugh}.
 
+O presente documento referece as atividades desenvolvidas para a Aula Prática 2 (AP2) da disciplina de Circuitos Lógicos (EEL280). O objetivo 
+central desta prática é o projeto, a simplificação e a implementação de circuitos combinacionais voltados para o acionamento de displays de 7 segmentos.
+
+\chapter {Exercicios Propostos}
+
+\includepdf[pages=-, pagecommand={\thispagestyle{plain}}]{/home/sparthur/git/logic-circuits-design/AP2/AP2-exercice-guide.pdf}
+
+\chapter {Simplificação de Circuitos Simples}
+
+\includepdf[pages=-, pagecommand={\thispagestyle{plain}}]{/home/sparthur/git/logic-circuits-design/AP2/Exercicio-1-resolvido.pdf}
+
+\chapter {Display de 7 Segmentos}
+
+\includepdf[pages=-, pagecommand={\thispagestyle{plain}}]{/home/sparthur/git/logic-circuits-design/AP2/display-de-7-segmentos.pdf}
+
+\chapter {Montagem do Circuito}
+
+Nesta ultima etapa é necessario o uso dos CI's 7404,7408 e 7432 para a lógica do circuito, de resistores para controle de tensão e proteção dos componentes, 
+leds, para indicações visuais dos processos e estado do circuito, fios condutores para a corrente, o display de 7 segmentos (catodo comum) e um protoboard, 
+onde o circuito vai ser montado e testado. Os componetes serão montados conforme demonstrado no capitulo anterior e posteriormente os testes serão conduzidos 
+para a produção do relatório final onde maiores conclusões serão tiradas.
+
+\end{document}
