@@ -1,0 +1,42 @@
+%preamble: defining document parameters and packages
+
+\documentclass[11pt]{report}         %defining documentclass
+\usepackage[brazil] {babel}          %defining document language
+\usepackage[utf8]{inputenc}          %defining to support portuguese a accentuation
+\usepackage{authblk}                 %defining packages to better author format
+\usepackage{indentfirst}             %defining packages to indention first paragraph's line
+\usepackage[margin=2.5cm]{geometry}  %defining margin
+\usepackage[table]{xcolor}           %defining table colors
+\usepackage{pdfpages}                %enabling pdf attachment
+
+%cover (title, author and date)
+
+\title{\textbf{Preparatório para AP3}}
+\author{Arthur Siqueira Paz Teixeira \\ \& \\ Yure da Silva Lacerda de Barros} 
+\affil{Disciplina: Circuitos Lógicos -- Professor: Fabio Marujo}
+\date{\today}
+
+
+\begin{document}                  %start document
+
+\maketitle                        %generate the cover
+\tableofcontents                  %generate the summary
+
+\chapter {Introdução}             %First chapter
+
+Neste documento será descrito o planejamento, conforme pedido no anexo \ref{anexo1} e execução de um circuito somador BCD de dois números (de digito único) 
+com saida simples em um unico dysplay de LED de 7 segmentos. Para que seja possivel a extecução da representação de resultados acima de 9 
+(limitados entre 10 e 18) será usado, recursivamente, um LED para representar a presensa ou ausencia do número 1 na casa das dezenas.
+
+\chapter {Planejamento}
+
+Como parte do planejamento deve-se pontuar a divisão do processo em 5 partes, definir entradas e saidas, montagem da tabela verdade, simplificação do
+circuito, simulação e lista de componetes necessarios.
+
+\section {Definindo entradas e saidas}
+
+\chapter {Anexos}
+
+\includepdf[pages= 1, addtotoc={1, section, 2, {Anexo 1: Guia da AP3}, anexo1}]{/home/sparthur/git/logic-circuits-design/AP3/AP3-exercice-guide.pdf}
+
+\end{document}
