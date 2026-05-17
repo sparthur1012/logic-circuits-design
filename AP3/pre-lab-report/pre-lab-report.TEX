@@ -8,6 +8,8 @@
 \usepackage[margin=2.5cm]{geometry}  %defining margin
 \usepackage[table]{xcolor}           %defining table colors
 \usepackage{pdfpages}                %enabling pdf attachment
+\usepackage{graphicx}                %enabling image attachment
+\usepackage{float}                   %enabling a better abaut image em tabular posicions in pages
 
 %cover (title, author and date)
 
@@ -34,6 +36,163 @@ Como parte do planejamento deve-se pontuar a divisão do processo em 5 partes, d
 circuito, simulação e lista de componetes necessarios.
 
 \section {Definindo entradas e saidas}
+
+Precisa-se de dois C.I.s somadores para o projeto, cada somador contem um total de oito entradas: $A1_{in}$, $A2_{in}$, $A3_{in}$, $A4_{in}$, $B1_{in}$, 
+$B2_{in}$, $B3_{in}$ e $B4_{in}$. Essas entradas geram quatro saídas: $S3_{out}$, $S2_{out}$, $S1_{out}$, $S0_{out}$ e $C_{out}$. Para o resultado pedido 
+neste projeto as saidas do primeiro C.I. serão conectadas nas entradas $A1_{in}$, $A2_{in}$, $A3_{in}$ e $A4_{in}$ do segundo somador, sobrando apenas 
+4 entradas que serão conectadas de forma a auxiliar em problemas que vermos a seguir.
+
+Na soma de BCD, só são aceitos resustados que vão de 0 (0000) a 9 (1001). Quando você soma dois dígitos BCD usando um somador binário comum (o primeiro 7483), 
+duas questões aparecem se o resultado for maior que 9:
+
+\begin {itemize}
+
+\item \textbf{Resultados Inválidos:} A soma binária vai resultar valores de 10 (1010) a 15 (1111), que não existem no código BCD e não podem 
+ser representados em um único o display de 7 segmentos.
+
+\item \textbf{Vai-Um(textit{Carry in}):} Quando a soma der entre 16 (10000) e 19 (10011), o somador, que possui apenas 4 bits de saída, precisa de um bit extra 
+e joga esse "vai-um" na saida $C_{out}$ para 1. Para o BCD, 16 deveria ser o display de dezenas em 1 e o de unidades em 6 (0110), e não 0 (0000).
+
+\end {itemize}
+
+A solução é considerar uma defasagem de 6 digitos sempre que o valor for de 9 a 19. Considerando isso o segundo display deverá somar 6 em todos os resultados 
+dentro destas caracteristicas.
+
+\section {Montagem da tabela verdade}
+
+A tabela deve focar em nos resultados entre 9 e 19 para que possamos montar o circuito de forma que a soma de 6 somente ocorra quando necessaria.
+
+\begin{table}[h!]
+    \centering
+    
+    \caption{Tabela Verdade Teórica/Simulada}
+    
+    \begin{tabular}{|c|c|c|c|c|c|>{\columncolor{black}\color{white}}c|}
+
+      \hline
+      \textbf{Resultado da Soma} & \textbf{C} & \textbf{S3} & \textbf{S2} & \textbf{S1} & \textbf{S0} & \textbf{X} \\ \hline
+      0  & 0 & 0 & 0 & 0 & 0 & 0                  \\ \hline
+      1 até 7 & ... & ... & ... & ... & ... & 0   \\ \hline
+      8  & 0 & 1 & 0 & 0 & 0 & 0                  \\ \hline
+      9  & 0 & 1 & 0 & 0 & 1 & 0                  \\ \hline
+      10 & 0 & 1 & 0 & 1 & 0 & 1                  \\ \hline
+      11 & 0 & 1 & 0 & 1 & 1 & 1                  \\ \hline
+      12 & 0 & 1 & 1 & 0 & 0 & 1                  \\ \hline
+      13 & 0 & 1 & 1 & 0 & 1 & 1                  \\ \hline
+      14 & 0 & 1 & 1 & 1 & 0 & 1                  \\ \hline
+      15 & 0 & 1 & 1 & 1 & 1 & 1                  \\ \hline
+      16 & 1 & 0 & 0 & 0 & 0 & 1                  \\ \hline
+      17 & 1 & 0 & 0 & 0 & 1 & 1                  \\ \hline
+      18 & 1 & 0 & 0 & 1 & 0 & 1                  \\ \hline
+      19 & 1 & 0 & 0 & 1 & 1 & 1                  \\ \hline
+      20 até 31 & ... & ... & ... & ... & ... & X \\ \hline
+
+    \end{tabular}
+
+\end{table}
+
+.\\
+
+\section {Simplificação do circuito}
+
+Extraindo da tabela verdade os valores que são relevantes para a simplificação temos:
+
+
+\begin{itemize}
+
+\item \textbf{mapeando as posições na tabela}
+
+
+\begin{table}[h!]
+    \centering
+    
+    \caption{Tabela mapeada}
+    
+    \begin{tabular}{|c|c|c|c|c|}
+
+      \hline
+      \textbf{---} & \textbf{S1' S0'} & \textbf{S1' S0} & \textbf{S1 S0} & \textbf{S1 S0'}\\ \hline
+      C' S3' S2' & 0 & 1 & 3 & 2       \\ \hline
+      C' S3' S2  & 4 & 5 & 7 & 6       \\ \hline
+      C' S3 S2   & 12 & 13 & 15 & 14   \\ \hline
+      C' S3 S2'  & 8 & 9 & 11 & 10     \\ \hline
+      C S3' S2'  & 16 & 17 & 19 & 18   \\ \hline
+      C S3' S2   & 20 & 21 & 23 & 22   \\ \hline
+      C S3 S2    & 28 & 29 & 31 & 30   \\ \hline
+      C S3 S2'   & 24 & 25 & 27 & 26   \\ \hline
+      
+    \end{tabular}
+
+\end{table}
+
+\newpage
+
+\item \textbf{Mapa de Karnaugh preenchido}
+
+\begin{table}[h!]
+    \centering
+    
+    \caption{Mapa de Karnaugh}
+    
+    \begin{tabular}{|c|c|c|c|c|}
+
+      \hline
+      \textbf{---} & \textbf{S1' S0'} & \textbf{S1' S0} & \textbf{S1 S0} & \textbf{S1 S0'}\\ \hline
+      C' S3' S2' & 0 & 0 & 0 & 0 \\ \hline
+      C' S3' S2  & 0 & 0 & 0 & 0 \\ \hline
+      C' S3 S2   & 1 & 1 & 1 & 1 \\ \hline
+      C' S3 S2'  & 0 & 0 & 1 & 1 \\ \hline
+      C S3' S2'  & 1 & 1 & 1 & 1 \\ \hline
+      C S3' S2   & X & X & X & X \\ \hline
+      C S3 S2    & X & X & X & X \\ \hline
+      C S3 S2'   & X & X & X & X \\ \hline
+      
+    \end{tabular}
+
+\end{table}
+
+.\\
+
+\item \textbf{Equação encontrada}
+
+$X = C + (S3 \cdot S1) + (S3 \cdot S2)$
+
+\end{itemize}
+
+\section{Simulação}
+
+Para verificar o funcionamento antes da montagem em um circuito fisico é necessaria a implementação do circuito em um softwere que simule o seu 
+funcionamento, evitando gastos desnecessarios e perca de tempo na correção de possiveis erros. A imagem a seguir demonstra a implementação do Circuito 
+desenvolvido neste documento
+
+\begin{figure}[H] % <--- [H] força a imagem a ficar exatamente AQUI no texto
+    \centering
+    \includegraphics[width=0.7\textwidth]{/home/sparthur/git/logic-circuits-design/AP3/circuit-schematic.png}
+    \caption{Diagrama Esquemático do Circuito}
+    \label{fig:esquematico}
+\end{figure}
+
+\section{Lista de componetes}
+
+Para a aplicação serão necessarios:
+
+\begin{itemize}
+
+\item \textbf{Protoboard [02x]}
+\item \textbf{C.I. 7483 (meio-somador) [02x]}
+\item \textbf{C.I. 7408 (AND) [01x]}
+\item \textbf{C.I. 7432 (OR) [01x]}
+\item \textbf{LED [09x]}
+\item \textbf{Display de 7 segmentos (Anodo Comum) [01x]}
+\item \textbf{Resistores (330 Ohms) [16x]}
+
+\end{itemize}
+
+
+\chapter{Conclusão}
+
+Dados os resultados das simulações e a simplicidade do projeto a implementação fisica do projeto parece viavel. O próximo passo é a construção 
+do circuito e realização de testes para verificar a realidade da implementação.
 
 \chapter {Anexos}
 

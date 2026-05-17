@@ -2,5 +2,10 @@
 \contentsline {chapter}{\numberline {1}Introdução}{2}{}%
 \contentsline {chapter}{\numberline {2}Planejamento}{3}{}%
 \contentsline {section}{\numberline {2.1}Definindo entradas e saidas}{3}{}%
-\contentsline {chapter}{\numberline {3}Anexos}{4}{}%
-\contentsline {section}{\numberline {3.1}\ignorespaces {Anexo 1: Guia da AP3}}{5}{}%
+\contentsline {section}{\numberline {2.2}Montagem da tabela verdade}{3}{}%
+\contentsline {section}{\numberline {2.3}Simplificação do circuito}{4}{}%
+\contentsline {section}{\numberline {2.4}Simulação}{5}{}%
+\contentsline {section}{\numberline {2.5}Lista de componetes}{5}{}%
+\contentsline {chapter}{\numberline {3}Conclusão}{7}{}%
+\contentsline {chapter}{\numberline {4}Anexos}{8}{}%
+\contentsline {section}{\numberline {4.1}\ignorespaces {Anexo 1: Guia da AP3}}{9}{}%
