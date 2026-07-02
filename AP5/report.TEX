@@ -1,0 +1,338 @@
+%preamble: defining document parameters and packages
+
+\documentclass[11pt]{report}         %defining documentclass
+\usepackage[brazilian] {babel}          %defining document language
+\usepackage[utf8]{inputenc}          %defining to support portuguese a accentuation
+\usepackage{authblk}                 %defining packages to better author format
+\usepackage{indentfirst}             %defining packages to indention first paragraph's line
+\usepackage[margin=2.5cm]{geometry}  %defining margin
+\usepackage[table]{xcolor}           %defining table colors
+\usepackage{pdfpages}                %enabling pdf attachment
+\usepackage{graphicx}                %enabling image attachment
+\usepackage{float}                   %enabling a better abaut image em tabular posicions in pages
+
+%cover (title, author and date)
+
+\title{\textbf{Relatório da AP3}}
+\author{Arthur Siqueira Paz Teixeira \\ \& \\ Yure da Silva Lacerda de Barros} 
+\affil{Disciplina: Circuitos Lógicos -- Professor: Fabio Marujo}
+\date{\today}
+
+
+\begin{document}                  %start document
+
+\maketitle                        %generate the cover
+\tableofcontents                  %generate the summary
+
+\chapter {Introdução}             %First chapter
+
+Neste documento está descrito o planejamento, conforme pedido no anexo \ref{anexo1}, e execução do circuito somador BCD de dois números (de digito único) 
+com saida simples em um unico dysplay de LED de 7 segmentos. Para que seja possivel a extecução da representação de resultados acima de 9 
+(limitados entre 10 e 18) será usado, recursivamente, um LED para representar a presensa ou ausencia do número 1 na casa das dezenas.
+
+Além disso também foi proposto que projete-se o módulo básico de um comparador de dois números de 4 bits, expansível utilizando a ferramenta MACRO do 
+Circuit Maker para implementar o módulo básico na simulação para bits.
+
+
+\chapter {Planejamento}
+
+Como parte do planejamento deve-se pontuar a divisão do processo em 5 partes, definir entradas e saidas, montagem da tabela verdade, simplificação do
+circuito, simulação e lista de componetes necessarios (no caso do meio somador que foi implementado de forma prática).
+
+\section {Definindo entradas e saidas}
+
+\begin {itemize}
+
+\item \textbf{Somador BCD:} Precisa-se de dois C.I.s somadores para o projeto, cada somador contem um total de oito entradas: $A1_{in}$, $A2_{in}$, $A3_{in}$, $A4_{in}$, $B1_{in}$, 
+$B2_{in}$, $B3_{in}$ e $B4_{in}$. Essas entradas geram quatro saídas: $S3_{out}$, $S2_{out}$, $S1_{out}$, $S0_{out}$ e $C_{out}$. Para o resultado pedido 
+neste projeto as saidas do primeiro C.I. serão conectadas nas entradas $A1_{in}$, $A2_{in}$, $A3_{in}$ e $A4_{in}$ do segundo somador, sobrando apenas 
+4 entradas que serão conectadas de forma a auxiliar em problemas que vermos a seguir.
+
+Na soma de BCD, só são aceitos resustados que vão de 0 (0000) a 9 (1001). Quando você soma dois dígitos BCD usando um somador binário comum (o primeiro 7483), 
+duas questões aparecem se o resultado for maior que 9:
+
+\begin {itemize}
+
+\item \textbf{Resultados Inválidos:} A soma binária vai resultar valores de 10 (1010) a 15 (1111), que não existem no código BCD e não podem 
+ser representados em um único o display de 7 segmentos.
+
+\item \textbf{Vai-Um(textit{Carry in}):} Quando a soma der entre 16 (10000) e 19 (10011), o somador, que possui apenas 4 bits de saída, precisa de um bit extra 
+e joga esse "vai-um" na saida $C_{out}$ para 1. Para o BCD, 16 deveria ser o display de dezenas em 1 e o de unidades em 6 (0110), e não 0 (0000).
+
+\end {itemize}
+
+A solução é considerar uma defasagem de 6 digitos sempre que o valor for de 9 a 19. Considerando isso o segundo display deverá somar 6 em todos os resultados 
+dentro destas caracteristicas.
+
+\item \textbf{Comparador:} O circuito faz a analise da entrada a cada bit, do mais significativo(MSB) até o menos(LSB), para verificar se A é igual, maior 
+ou menor que B.
+
+\begin{itemize}
+
+\item \textbf{Definiu-se:} 
+
+\begin {itemize} 
+
+\item $A = [A_3, A_2, A_1, A_0]$ e $B = [B_3, B_2, B_1, B_0]$ onde $X_3$ é o MSB.
+
+\item para igualdade todos os bits devem ser iguais: $[A_3, A_2, A_1, A_0] = [B_3, B_2, B_1, B_0]$
+
+\item para maioridade: Definiu-se uma hierarquia onde se $A_3 > B_3$. Logo, A já é maior que B, pois o MSB de A é maior que o de B. Está relação se repete 
+em cada um dos bits comparados
+
+\item para minoridade: Definiu-se o inverso do item anterior, se $A_3 < B_3$. Logo, A já é menor que B, pois o MSB de A é menor que o de B.
+
+\item para expandir: Coloca-se uma porta OR em cada uma das saídas. A primeira entrada da porta OR é a saída correspondente (X ou Y) e a segunda 
+é a saída correspondente (X ou Y) do comparador anterior. Assim, consegue-se expandir em 8 bits a cada comparador anexado.
+
+\end {itemize} 
+\end {itemize}
+\end {itemize}
+
+\section {Montagem da tabela verdade}
+
+Enquanto esta etapa é dispensvel no comparador, que tem por objetivo ser expansível e, portanto não deve ser simplificado para evitar problemas 
+na expanção, a tabela do somador deve focar em nos resultados entre 9 e 19 para que possamos montar o circuito de forma que a soma de 6 somente ocorra 
+quando necessaria.
+
+\begin{table}[h!]
+    \centering
+    
+    \caption{Tabela Verdade Teórica/Simulada}
+    
+    \begin{tabular}{|c|c|c|c|c|c|>{\columncolor{black}\color{white}}c|}
+
+      \hline
+      \textbf{Resultado da Soma} & \textbf{C} & \textbf{S3} & \textbf{S2} & \textbf{S1} & \textbf{S0} & \textbf{X} \\ \hline
+      0  & 0 & 0 & 0 & 0 & 0 & 0                  \\ \hline
+      1 até 7 & ... & ... & ... & ... & ... & 0   \\ \hline
+      8  & 0 & 1 & 0 & 0 & 0 & 0                  \\ \hline
+      9  & 0 & 1 & 0 & 0 & 1 & 0                  \\ \hline
+      10 & 0 & 1 & 0 & 1 & 0 & 1                  \\ \hline
+      11 & 0 & 1 & 0 & 1 & 1 & 1                  \\ \hline
+      12 & 0 & 1 & 1 & 0 & 0 & 1                  \\ \hline
+      13 & 0 & 1 & 1 & 0 & 1 & 1                  \\ \hline
+      14 & 0 & 1 & 1 & 1 & 0 & 1                  \\ \hline
+      15 & 0 & 1 & 1 & 1 & 1 & 1                  \\ \hline
+      16 & 1 & 0 & 0 & 0 & 0 & 1                  \\ \hline
+      17 & 1 & 0 & 0 & 0 & 1 & 1                  \\ \hline
+      18 & 1 & 0 & 0 & 1 & 0 & 1                  \\ \hline
+      19 & 1 & 0 & 0 & 1 & 1 & 1                  \\ \hline
+      20 até 31 & ... & ... & ... & ... & ... & X \\ \hline
+
+    \end{tabular}
+
+\end{table}
+
+.\\
+
+\section {Simplificação do circuito}
+
+Extraindo da tabela verdade os valores que são relevantes para a simplificação temos:
+
+
+\begin{itemize}
+
+\item \textbf{mapeando as posições na tabela}
+
+
+\begin{table}[h!]
+    \centering
+    
+    \caption{Tabela mapeada}
+    
+    \begin{tabular}{|c|c|c|c|c|}
+
+      \hline
+      \textbf{---} & \textbf{S1' S0'} & \textbf{S1' S0} & \textbf{S1 S0} & \textbf{S1 S0'}\\ \hline
+      C' S3' S2' & 0 & 1 & 3 & 2       \\ \hline
+      C' S3' S2  & 4 & 5 & 7 & 6       \\ \hline
+      C' S3 S2   & 12 & 13 & 15 & 14   \\ \hline
+      C' S3 S2'  & 8 & 9 & 11 & 10     \\ \hline
+      C S3' S2'  & 16 & 17 & 19 & 18   \\ \hline
+      C S3' S2   & 20 & 21 & 23 & 22   \\ \hline
+      C S3 S2    & 28 & 29 & 31 & 30   \\ \hline
+      C S3 S2'   & 24 & 25 & 27 & 26   \\ \hline
+      
+    \end{tabular}
+
+\end{table}
+
+\newpage
+
+\item \textbf{Mapa de Karnaugh preenchido}
+
+\begin{table}[h!]
+    \centering
+    
+    \caption{Mapa de Karnaugh}
+    
+    \begin{tabular}{|c|c|c|c|c|}
+
+      \hline
+      \textbf{---} & \textbf{S1' S0'} & \textbf{S1' S0} & \textbf{S1 S0} & \textbf{S1 S0'}\\ \hline
+      C' S3' S2' & 0 & 0 & 0 & 0 \\ \hline
+      C' S3' S2  & 0 & 0 & 0 & 0 \\ \hline
+      C' S3 S2   & 1 & 1 & 1 & 1 \\ \hline
+      C' S3 S2'  & 0 & 0 & 1 & 1 \\ \hline
+      C S3' S2'  & 1 & 1 & 1 & 1 \\ \hline
+      C S3' S2   & X & X & X & X \\ \hline
+      C S3 S2    & X & X & X & X \\ \hline
+      C S3 S2'   & X & X & X & X \\ \hline
+      
+    \end{tabular}
+
+\end{table}
+
+.\\
+
+\item \textbf{Equação encontrada}
+
+$X = C + (S3 \cdot S1) + (S3 \cdot S2)$
+
+\end{itemize}
+
+\section{Simulação}
+
+\begin{itemize}
+
+\item \textbf{Somador:} Para verificar o funcionamento antes da montagem em um circuito fisico é necessaria a implementação do circuito em um softwere que simule o seu 
+funcionamento, evitando gastos desnecessarios e perca de tempo na correção de possiveis erros. A imagem a seguir demonstra a implementação do Circuito 
+desenvolvido neste documento
+
+\begin{figure}[H] % <--- [H] força a imagem a ficar exatamente AQUI no texto
+    \centering
+    \includegraphics[width=0.7\textwidth]{/home/sparthur/git/logic-circuits-design/AP3/circuit-schematic.png}
+    \caption{Diagrama Esquemático do Circuito}
+    \label{fig:esquematico}
+\end{figure}
+
+nesta simulação também foram feitas analises das entradas e saidas, montando uma tabela verdade
+
+\newpage
+
+\textbf{Tabela Simulada}
+
+\begin{table}[h!]
+    \begingroup
+    \footnotesize
+    \caption{Tabela Simulada}
+
+        \begin{tabular}{|>{\columncolor{black}\color{white}}c|c|c|c|c|c|c|c|c|c|}
+
+      \hline
+      \textbf{Resultado} & \textbf{Entrada A} & \textbf{Entrada B} & \textbf{Saída S} & \textbf{C} & \textbf{X} & \textbf{Entrada S2} & \textbf{Saída S2} & \textbf{LED} & \textbf{7 segmentos}\\ \hline
+      00 & 0000 (0) & 0000 (0) & 0000 (00) & 0 & 0 & 0000 (0) & 0000 (0) & 0 & 0 \\ \hline
+      01 & 0001 (1) & 0000 (0) & 0001 (01) & 0 & 0 & 0000 (0) & 0001 (1) & 0 & 1 \\ \hline
+      02 & 0001 (1) & 0001 (1) & 0010 (02) & 0 & 0 & 0000 (0) & 0010 (2) & 0 & 2 \\ \hline
+      03 & 0010 (2) & 0001 (1) & 0011 (03) & 0 & 0 & 0000 (0) & 0011 (3) & 0 & 3 \\ \hline
+      04 & 0010 (2) & 0010 (2) & 0100 (04) & 0 & 0 & 0000 (0) & 0100 (4) & 0 & 4 \\ \hline
+      05 & 0011 (3) & 0010 (2) & 0101 (05) & 0 & 0 & 0000 (0) & 0101 (5) & 0 & 5 \\ \hline
+      06 & 0011 (3) & 0011 (3) & 0110 (06) & 0 & 0 & 0000 (0) & 0110 (6) & 0 & 6 \\ \hline
+      07 & 0100 (4) & 0011 (3) & 0111 (07) & 0 & 0 & 0000 (0) & 0111 (7) & 0 & 7 \\ \hline
+      08 & 0100 (4) & 0100 (4) & 1000 (08) & 0 & 0 & 0000 (0) & 1000 (8) & 0 & 8 \\ \hline
+      09 & 0101 (5) & 0100 (4) & 1001 (09) & 0 & 0 & 0000 (0) & 1001 (9) & 0 & 9 \\ \hline
+      10 & 0101 (5) & 0101 (5) & 1010 (10) & 0 & 1 & 0110 (6) & 0000 (0) & 1 & 0 \\ \hline
+      11 & 0110 (6) & 0101 (5) & 1011 (11) & 0 & 1 & 0110 (6) & 0001 (1) & 1 & 1 \\ \hline
+      12 & 0110 (6) & 0110 (6) & 1100 (12) & 0 & 1 & 0110 (6) & 0010 (2) & 1 & 2 \\ \hline
+      13 & 0111 (7) & 0110 (6) & 1101 (13) & 0 & 1 & 0110 (6) & 0011 (3) & 1 & 3 \\ \hline
+      14 & 0111 (7) & 0111 (7) & 1110 (14) & 0 & 1 & 0110 (6) & 0100 (4) & 1 & 4 \\ \hline
+      15 & 1000 (8) & 0111 (7) & 1111 (15) & 0 & 1 & 0110 (6) & 0101 (5) & 1 & 5 \\ \hline
+      16 & 1000 (8) & 1000 (8) & 0000 (00) & 1 & 1 & 0110 (6) & 0110 (6) & 1 & 6 \\ \hline
+      17 & 1001 (9) & 1000 (9) & 0001 (01) & 1 & 1 & 0110 (6) & 0111 (7) & 1 & 7 \\ \hline
+      18 & 1001 (9) & 1001 (9) & 0010 (02) & 1 & 1 & 0110 (6) & 1000 (8) & 1 & 8 \\ \hline
+
+    \end{tabular}
+    \endgroup
+\end{table}
+
+\newpage
+
+\item \textbf {Comparador}
+
+No caso do comarador foram feitas variadas simulações para cada modo de implementação:
+
+\begin {itemize}
+
+\item \textbf {Diagrama Esquemático do Circuito Comparador}
+
+\begin{figure}[H] % <--- [H] força a imagem a ficar exatamente AQUI no texto
+    \centering
+    \includegraphics[width=0.7\textwidth]{/home/sparthur/git/logic-circuits-design/AP3/final-report/circuito-do-comparador.png}
+    \caption{Diagrama Esquemático do Circuito Comparador}
+    \label{fig:esquematico}
+\end{figure}
+
+\item \textbf{Diagrama Esquemático do Circuito com o comparador expansível}
+
+\begin{figure}[H] % <--- [H] força a imagem a ficar exatamente AQUI no texto
+    \centering
+    \includegraphics[width=0.7\textwidth]{/home/sparthur/git/logic-circuits-design/AP3/final-report/comparador-expansível.png}
+    \caption{Diagrama Esquemático do Circuito com o comparador expansível}
+    \label{fig:esquematico}
+\end{figure}
+
+\newpage
+
+\item \textbf{Diagrama Esquemático do Circuito com o comparador com $A = B$}
+
+\begin{figure}[h] % <--- [h] força a imagem a ficar exatamente aqui no texto
+    \centering
+    \includegraphics[width=0.7\textwidth]{/home/sparthur/git/logic-circuits-design/AP3/final-report/comparador-no-somador-BCD-com-A-igual-A-B.png}
+    \caption{Diagrama Esquemático do Circuito com o comparador com $A = B$}
+    \label{fig:esquematico}
+\end{figure}
+
+\item \textbf {Diagrama Esquemático do Circuito com o comparador com $A > B$}
+
+\begin{figure}[h] % <--- [h] força a imagem a ficar exatamente aqui no texto
+    \centering
+    \includegraphics[width=0.7\textwidth]{/home/sparthur/git/logic-circuits-design/AP3/final-report/comparador-no-somador-BCD-com-A-maior-que-B.png}
+    \caption{Diagrama Esquemático do Circuito com o comparador com $A > B$}
+    \label{fig:esquematico}
+\end{figure}
+
+\newpage
+
+\item \textbf{Diagrama Esquemático do Circuito com o comparador com $A < B$}
+
+\begin{figure}[h] % <--- [h] força a imagem a ficar exatamente aqui no texto
+    \centering
+    \includegraphics[width=0.7\textwidth]{/home/sparthur/git/logic-circuits-design/AP3/final-report/comparador-no-somador-BCD-com-B-maior-que-A.png}
+    \caption{Diagrama Esquemático do Circuito com o comparador com $A < B$}
+    \label{fig:esquematico}
+\end{figure}
+
+\end {itemize}
+\end {itemize}
+
+\section{Lista de componetes}
+
+Para a aplicação serão necessarios:
+
+\begin{itemize}
+
+\item \textbf{Protoboard [02x]}
+\item \textbf{C.I. 7483 (meio-somador) [02x]}
+\item \textbf{C.I. 7448 (conversor) [01x]}
+\item \textbf{C.I. 7408 (AND) [01x]}
+\item \textbf{C.I. 7432 (OR) [01x]}
+\item \textbf{LED [09x]}
+\item \textbf{Display de 7 segmentos (Anodo Comum) [01x]}
+\item \textbf{Resistores (330 Ohms) [16x]}
+
+\end {itemize}
+
+\chapter{Conclusão}
+
+Ao fim da simulação ouve a montagem do circuito somador, que seguiu o diagrama projetado no \textit{Circuit-Maker-2000} e apresentado acima.
+Após a montagem no \textit{Protoboard} o foram feitas comparações com os a tabela verdade e foi observada a confirmação dos dados aqui póstos 
+durante a preparação.
+
+Potanto pode-se definir como bem sucedida a prática de forma que seus principais objetivos foram compridos e um somador funcional foi montado.
+
+\chapter {Anexos}
+
+\includepdf[pages= 1, addtotoc={1, section, 2, {Anexo 1: Guia da AP3}, anexo1}]{/home/sparthur/git/logic-circuits-design/AP3/AP3-exercice-guide.pdf}
+
+\end{document}
