@@ -1,7 +1,7 @@
 %preamble: defining document parameters and packages
 
 \documentclass[11pt]{report}         %defining documentclass
-\usepackage[brazil] {babel}          %defining document language
+\usepackage[brazilian] {babel}          %defining document language
 \usepackage[utf8]{inputenc}          %defining to support portuguese a accentuation
 \usepackage{authblk}                 %defining packages to better author format
 \usepackage{indentfirst}             %defining packages to indention first paragraph's line
@@ -172,6 +172,45 @@ desenvolvido neste documento
     \label{fig:esquematico}
 \end{figure}
 
+nesta simulação também foram feitas analises das entradas e saidas, montando uma tabela verdade
+
+\newpage
+
+\textbf{Tabela Simulada}
+
+\begin{table}[h!]
+    \begingroup
+    \footnotesize
+    \caption{Tabela Simulada}
+
+        \begin{tabular}{|>{\columncolor{black}\color{white}}c|c|c|c|c|c|c|c|c|c|}
+
+      \hline
+      \textbf{Resultado} & \textbf{Entrada A} & \textbf{Entrada B} & \textbf{Saída S} & \textbf{C} & \textbf{X} & \textbf{Entrada S2} & \textbf{Saída S2} & \textbf{LED} & \textbf{7 segmentos}\\ \hline
+      00 & 0000 (0) & 0000 (0) & 0000 (00) & 0 & 0 & 0000 (0) & 0000 (0) & 0 & 0 \\ \hline
+      01 & 0001 (1) & 0000 (0) & 0001 (01) & 0 & 0 & 0000 (0) & 0001 (1) & 0 & 1 \\ \hline
+      02 & 0001 (1) & 0001 (1) & 0010 (02) & 0 & 0 & 0000 (0) & 0010 (2) & 0 & 2 \\ \hline
+      03 & 0010 (2) & 0001 (1) & 0011 (03) & 0 & 0 & 0000 (0) & 0011 (3) & 0 & 3 \\ \hline
+      04 & 0010 (2) & 0010 (2) & 0100 (04) & 0 & 0 & 0000 (0) & 0100 (4) & 0 & 4 \\ \hline
+      05 & 0011 (3) & 0010 (2) & 0101 (05) & 0 & 0 & 0000 (0) & 0101 (5) & 0 & 5 \\ \hline
+      06 & 0011 (3) & 0011 (3) & 0110 (06) & 0 & 0 & 0000 (0) & 0110 (6) & 0 & 6 \\ \hline
+      07 & 0100 (4) & 0011 (3) & 0111 (07) & 0 & 0 & 0000 (0) & 0111 (7) & 0 & 7 \\ \hline
+      08 & 0100 (4) & 0100 (4) & 1000 (08) & 0 & 0 & 0000 (0) & 1000 (8) & 0 & 8 \\ \hline
+      09 & 0101 (5) & 0100 (4) & 1001 (09) & 0 & 0 & 0000 (0) & 1001 (9) & 0 & 9 \\ \hline
+      10 & 0101 (5) & 0101 (5) & 1010 (10) & 0 & 1 & 0110 (6) & 0000 (0) & 1 & 0 \\ \hline
+      11 & 0110 (6) & 0101 (5) & 1011 (11) & 0 & 1 & 0110 (6) & 0001 (1) & 1 & 1 \\ \hline
+      12 & 0110 (6) & 0110 (6) & 1100 (12) & 0 & 1 & 0110 (6) & 0010 (2) & 1 & 2 \\ \hline
+      13 & 0111 (7) & 0110 (6) & 1101 (13) & 0 & 1 & 0110 (6) & 0011 (3) & 1 & 3 \\ \hline
+      14 & 0111 (7) & 0111 (7) & 1110 (14) & 0 & 1 & 0110 (6) & 0100 (4) & 1 & 4 \\ \hline
+      15 & 1000 (8) & 0111 (7) & 1111 (15) & 0 & 1 & 0110 (6) & 0101 (5) & 1 & 5 \\ \hline
+      16 & 1000 (8) & 1000 (8) & 0000 (00) & 1 & 1 & 0110 (6) & 0110 (6) & 1 & 6 \\ \hline
+      17 & 1001 (9) & 1000 (9) & 0001 (01) & 1 & 1 & 0110 (6) & 0111 (7) & 1 & 7 \\ \hline
+      18 & 1001 (9) & 1001 (9) & 0010 (02) & 1 & 1 & 0110 (6) & 1000 (8) & 1 & 8 \\ \hline
+
+    \end{tabular}
+    \endgroup
+\end{table}
+
 \section{Lista de componetes}
 
 Para a aplicação serão necessarios:
@@ -187,7 +226,6 @@ Para a aplicação serão necessarios:
 \item \textbf{Resistores (330 Ohms) [16x]}
 
 \end{itemize}
-
 
 \chapter{Conclusão}
 
